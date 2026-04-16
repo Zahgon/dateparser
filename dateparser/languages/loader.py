@@ -81,15 +81,7 @@ class LocaleDataLoader:
 
         :return: ordered locale code to locale instance mapping
         """
-        return OrderedDict(
-            self._load_data(
-                languages=languages,
-                locales=locales,
-                region=region,
-                use_given_order=use_given_order,
-                allow_conflicting_locales=allow_conflicting_locales,
-            )
-        )
+        pass
 
     def get_locales(
         self,

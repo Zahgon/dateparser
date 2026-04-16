@@ -19,8 +19,7 @@ def get_week_start(date, start_of_week="monday"):
 
 def get_week_end(date, start_of_week="monday"):
     """Get the end of the week for a given date."""
-    week_start = get_week_start(date, start_of_week)
-    return week_start + timedelta(days=6)
+    pass
 
 
 def detect_time_span(text):

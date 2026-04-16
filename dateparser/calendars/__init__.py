@@ -19,11 +19,7 @@ class CalendarBase:
         self.source = source
 
     def get_date(self):
-        try:
-            date_obj, period = self.parser.parse(self.source, settings)
-            return DateData(date_obj=date_obj, period=period)
-        except ValueError:
-            pass
+        pass
 
 
 class non_gregorian_parser(_parser):

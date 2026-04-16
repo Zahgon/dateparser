@@ -141,8 +141,7 @@ class jalali_parser(non_gregorian_parser):
     @classmethod
     def _replace_time(cls, source):
         def only_numbers(match_obj):
-            matched_string = match_obj.group()
-            return re.sub(r"\D", " ", matched_string)
+            pass
 
         hour_pattern = r"ساعت\s+\d{2}"
         minute_pattern = r"\d{2}\s+دقیقه"
@@ -162,7 +161,7 @@ class jalali_parser(non_gregorian_parser):
         day_pairs = list(cls._number_letters.items())
 
         def comp_key(tup):
-            return tup[0]
+            pass
 
         day_pairs.sort(key=comp_key, reverse=True)
 

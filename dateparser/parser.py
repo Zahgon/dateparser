@@ -32,15 +32,7 @@ def no_space_parser_eligibile(datestring):
 
 
 def get_unresolved_attrs(parser_object):
-    attrs = ["year", "month", "day"]
-    seen = []
-    unseen = []
-    for attr in attrs:
-        if getattr(parser_object, attr, None) is not None:
-            seen.append(attr)
-        else:
-            unseen.append(attr)
-    return seen, unseen
+    pass
 
 
 date_order_chart = {
@@ -639,61 +631,10 @@ class _parser:
             return [(component, getattr(dateobj, component))]
 
         def parse_number(token, skip_component=None):
-            type = 0
-
-            for component, directives in self.ordered_num_directives.items():
-                if skip_component == component:
-                    continue
-                for directive in directives:
-                    try:
-                        do = self._get_date_obj(token, directive)
-                        prev_value = getattr(self, component, None)
-                        if not prev_value:
-                            return set_and_return(token, type, component, do)
-                        else:
-                            try:
-                                prev_token, prev_type = getattr(
-                                    self, "_token_%s" % component
-                                )
-                                if prev_type == type:
-                                    do = self._get_date_obj(prev_token, directive)
-                            except ValueError:
-                                self.unset_tokens.append(
-                                    (prev_token, prev_type, component)
-                                )
-                                return set_and_return(token, type, component, do)
-                    except ValueError:
-                        pass
-            else:
-                raise ValueError("Unable to parse: %s" % token)
+            pass
 
         def parse_alpha(token, skip_component=None):
-            type = 1
-
-            for component, directives in self.alpha_directives.items():
-                if skip_component == component:
-                    continue
-                for directive in directives:
-                    try:
-                        do = self._get_date_obj(token, directive)
-                        prev_value = getattr(self, component, None)
-                        if not prev_value:
-                            return set_and_return(
-                                token, type, component, do, skip_date_order=True
-                            )
-                        elif component == "month":
-                            index = self.auto_order.index("month")
-                            self.auto_order[index] = "day"
-                            setattr(self, "_token_day", self._token_month)
-                            setattr(self, "_token_month", (token, type))
-                            return [
-                                (component, getattr(do, component)),
-                                ("day", prev_value),
-                            ]
-                    except Exception:
-                        pass
-            else:
-                raise ValueError("Unable to parse: %s" % token)
+            pass
 
         handlers = {0: parse_number, 1: parse_alpha}
         return handlers[type](token, skip_component)

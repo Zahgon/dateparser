@@ -11,13 +11,13 @@ class StaticTzInfo(tzinfo):
         self.__name = name
 
     def tzname(self, dt):
-        return self.__name
+        pass
 
     def utcoffset(self, dt):
         return self.__offset
 
     def dst(self, dt):
-        return timedelta(0)
+        pass
 
     def __repr__(self):
         return "<%s '%s'>" % (self.__class__.__name__, self.__name)
@@ -51,7 +51,7 @@ def word_is_tz(word):
 
 
 def convert_to_local_tz(datetime_obj, datetime_tz_offset):
-    return datetime_obj - datetime_tz_offset + local_tz_offset
+    pass
 
 
 def build_tz_offsets(search_regex_parts):

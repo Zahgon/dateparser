@@ -131,32 +131,7 @@ class Locale:
 
         :return: translated date string.
         """
-        date_string = self._translate_numerals(date_string)
-        if settings.NORMALIZE:
-            date_string = normalize_unicode(date_string)
-        date_string = self._simplify(date_string, settings=settings)
-        dictionary = self._get_dictionary(settings)
-        date_string_tokens = dictionary.split(date_string, keep_formatting)
-
-        relative_translations = self._get_relative_translations(settings=settings)
-
-        for i, word in enumerate(date_string_tokens):
-            word = word.lower()
-            for pattern, replacement in relative_translations.items():
-                if pattern.match(word):
-                    date_string_tokens[i] = pattern.sub(replacement, word)
-                    break
-            else:
-                if word in dictionary:
-                    fallback = word if keep_formatting and not word.isalpha() else ""
-                    date_string_tokens[i] = dictionary[word] or fallback
-        if "in" in date_string_tokens:
-            date_string_tokens = self._clear_future_words(date_string_tokens)
-        return self._join(
-            list(filter(bool, date_string_tokens)),
-            separator="" if keep_formatting else " ",
-            settings=settings,
-        )
+        pass
 
     def _translate_numerals(self, date_string):
         date_string_tokens = NUMERAL_PATTERN.split(date_string)
@@ -166,32 +141,10 @@ class Locale:
         return "".join(date_string_tokens)
 
     def _get_relative_translations(self, settings=None):
-        if settings.NORMALIZE:
-            if self._normalized_relative_translations is None:
-                self._normalized_relative_translations = (
-                    self._generate_relative_translations(normalize=True)
-                )
-            return self._normalized_relative_translations
-        else:
-            if self._relative_translations is None:
-                self._relative_translations = self._generate_relative_translations(
-                    normalize=False
-                )
-            return self._relative_translations
+        pass
 
     def _generate_relative_translations(self, normalize=False):
-        relative_translations = self.info.get("relative-type-regex", {})
-        relative_dictionary = OrderedDict()
-        for key, value in relative_translations.items():
-            if normalize:
-                value = list(map(normalize_unicode, value))
-            pattern = "|".join(sorted(value, key=len, reverse=True))
-            pattern = pattern.replace(r"(\d+", r"(?P<n>\d+")
-            pattern = re.compile(
-                r"^(?:{})$".format(pattern), re.UNICODE | re.IGNORECASE
-            )
-            relative_dictionary[pattern] = key
-        return relative_dictionary
+        pass
 
     def translate_search(self, search_string, settings=None):
         dashes = ["-", "——", "—", "～"]
@@ -454,12 +407,7 @@ class Locale:
         date_string = self._apply_simplifications(date_string, simplifications)
 
         def replace_number_pairs(match):
-            first_num = int(match.group(1))
-            second_num = int(match.group(2))
-            result = first_num + second_num
-            if 1 <= result <= 31 and first_num in [20, 30] and 1 <= second_num <= 9:
-                return str(result)
-            return match.group(0)
+            pass
 
         number_pair_pattern = r"\b(\d+)\s+(\d+)\b"
         date_string = re.sub(number_pair_pattern, replace_number_pairs, date_string)
@@ -628,33 +576,4 @@ class Locale:
         self._normalized_dictionary = NormalizedDictionary(self.info, settings=settings)
 
     def to_parserinfo(self, base_cls=parser.parserinfo):
-        attributes = {
-            "JUMP": self.info.get("skip", []),
-            "PERTAIN": self.info.get("pertain", []),
-            "WEEKDAYS": [
-                self.info["monday"],
-                self.info["tuesday"],
-                self.info["wednesday"],
-                self.info["thursday"],
-                self.info["friday"],
-                self.info["saturday"],
-                self.info["sunday"],
-            ],
-            "MONTHS": [
-                self.info["january"],
-                self.info["february"],
-                self.info["march"],
-                self.info["april"],
-                self.info["may"],
-                self.info["june"],
-                self.info["july"],
-                self.info["august"],
-                self.info["september"],
-                self.info["october"],
-                self.info["november"],
-                self.info["december"],
-            ],
-            "HMS": [self.info["hour"], self.info["minute"], self.info["second"]],
-        }
-        name = "{language}ParserInfo".format(language=self.info["name"])
-        return type(name, bases=[base_cls], dict=attributes)
+        pass

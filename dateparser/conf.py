@@ -65,8 +65,7 @@ class Settings:
         return cls._pyfile_data
 
     def _updateall(self, iterable):
-        for key, value in iterable:
-            setattr(self, key, value)
+        pass
 
     def replace(self, mod_settings=None, **kwds):
         for k, v in kwds.items():
@@ -89,20 +88,7 @@ settings = Settings()
 def apply_settings(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        mod_settings = kwargs.get("settings")
-        kwargs["settings"] = mod_settings or settings
-
-        if isinstance(kwargs["settings"], dict):
-            kwargs["settings"] = settings.replace(
-                mod_settings=mod_settings, **kwargs["settings"]
-            )
-
-        if not isinstance(kwargs["settings"], Settings):
-            raise TypeError(
-                "settings can only be either dict or instance of Settings class"
-            )
-
-        return f(*args, **kwargs)
+        pass
 
     return wrapper
 
@@ -112,66 +98,25 @@ class SettingValidationError(ValueError):
 
 
 def _check_repeated_values(setting_name, setting_value):
-    if len(setting_value) != len(set(setting_value)):
-        raise SettingValidationError(
-            'There are repeated values in the "{}" setting'.format(setting_name)
-        )
-    return
+    pass
 
 
 def _check_require_part(setting_name, setting_value):
     """Returns `True` if the provided list of parts contains valid values"""
-    invalid_values = set(setting_value) - {"day", "month", "year"}
-    if invalid_values:
-        raise SettingValidationError(
-            '"{}" setting contains invalid values: {}'.format(
-                setting_name, ", ".join(invalid_values)
-            )
-        )
-    _check_repeated_values(setting_name, setting_value)
+    pass
 
 
 def _check_parsers(setting_name, setting_value):
     """Returns `True` if the provided list of parsers contains valid values"""
-    existing_parsers = [
-        "timestamp",
-        "relative-time",
-        "custom-formats",
-        "absolute-time",
-        "no-spaces-time",
-        "negative-timestamp",
-    ]  # FIXME: Extract the list of existing parsers from another place (#798)
-    unknown_parsers = set(setting_value) - set(existing_parsers)
-    if unknown_parsers:
-        raise SettingValidationError(
-            'Found unknown parsers in the "{}" setting: {}'.format(
-                setting_name, ", ".join(unknown_parsers)
-            )
-        )
-    _check_repeated_values(setting_name, setting_value)
+    pass
 
 
 def _check_default_languages(setting_name, setting_value):
-    unsupported_languages = set(setting_value) - set(language_order)
-    if unsupported_languages:
-        raise SettingValidationError(
-            "Found invalid languages in the '{}' setting: {}".format(
-                setting_name, ", ".join(map(repr, unsupported_languages))
-            )
-        )
-    _check_repeated_values(setting_name, setting_value)
+    pass
 
 
 def _check_between_0_and_1(setting_name, setting_value):
-    is_valid = 0 <= setting_value <= 1
-    if not is_valid:
-        raise SettingValidationError(
-            "{} is not a valid value for {}. It can take values between 0 and "
-            "1.".format(
-                setting_value,
-                setting_name,
-            )
-        )
+    pass
 
 
 def check_settings(settings):

@@ -99,15 +99,7 @@ def _prepare_format(date_string: str, og_format: str) -> tuple[str, str]:
     day_of_month_in_format = False
 
     def repl(m: re.Match[str]) -> str:
-        format_char = m[1]
-        if format_char in ("Y", "y", "G"):
-            nonlocal year_in_format
-            year_in_format = True
-        elif format_char in ("d",):
-            nonlocal day_of_month_in_format
-            day_of_month_in_format = True
-
-        return ""
+        pass
 
     _ = re.sub(r"%[-_0^#]*[0-9]*([OE]?\\?.?)", repl, format)
     if day_of_month_in_format and not year_in_format:
